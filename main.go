@@ -8,6 +8,7 @@ import (
 	"net"
 	"os"
 	"strconv"
+	"strings"
 )
 
 var ProgName string
@@ -148,10 +149,12 @@ func main() {
 	var isListen bool
 	var host string
 	var proxy string
+	var proxyVersion string
 	flag.StringVar(&sourcePort, "p", "", "Specifies the source port netcat should use, subject to privilege restrictions and availability.")
 	flag.BoolVar(&isUdp, "u", false, "Use UDP instead of the default option of TCP.")
 	flag.BoolVar(&isListen, "l", false, "Used to specify that netcat should listen for an incoming connection rather than initiate a connection to a remote host.")
 	flag.StringVar(&proxy, "x", "", "Specify http proxy in the host:port format (using CONNECT method)")
+	flag.StringVar(&proxyVersion, "X", "connect", "Specify proxy version (connect, 4, 5)")
 	flag.Parse()
 	if flag.NFlag() == 0 && flag.NArg() == 0 {
 		fmt.Println(ProgName + " [-lu] [-p source port ] [-s source ip address ] [hostname ] [port[s]]")
@@ -219,18 +222,20 @@ func main() {
 				log.Println("CONNECT Proxy:", proxy)
 				con, err := net.Dial("tcp", proxy)
 				bail(err)
-				//req := "CONNECT www.sc.com:443 HTTP/1.1\r\n"
-				req := "CONNECT " +  host + destinationPort + " HTTP/1.1\r\n"
-				req += "\r\n\r\n"
-				reqba := []byte(req)
-				_, err = con.Write(reqba)
-				bail(err)
-				buf := make([]byte, 1024)
-				for {
-					_, err = con.Read(buf)
-					log.Println(string(buf))
-					if err == nil {
-						break;
+				if strings.ToLower(proxyVersion) == "connect" {
+					//req := "CONNECT www.sc.com:443 HTTP/1.1\r\n"
+					req := "CONNECT " + host + destinationPort + " HTTP/1.1\r\n"
+					req += "\r\n\r\n"
+					reqba := []byte(req)
+					_, err = con.Write(reqba)
+					bail(err)
+					buf := make([]byte, 1024)
+					for {
+						_, err = con.Read(buf)
+						log.Println(string(buf))
+						if err == nil {
+							break
+						}
 					}
 				}
 				tcp_con_handle(con)

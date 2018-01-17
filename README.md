@@ -3,9 +3,9 @@
 ---
 **Mod**
 
-Add `-x proxy:port` switch to make it suitable for OpenSSH `ProxyCommand` like this:
+Add `-X connect` and `-x proxy:port` switches to make it a drop-in replacement for netcat for OpenSSH `ProxyCommand` like this:
 ```
-ProxyCommand gnc -x proxy:8080 %h %p
+ProxyCommand gnc -X connect -x proxy:8080 %h %p
 ```
 ---
 
