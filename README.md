@@ -1,4 +1,14 @@
 ## go-netcat
+
+---
+**Mod**
+Add `-x proxy:port` switch to make it suitable for OpenSSH `ProxyCommand` like this:
+```
+ProxyCommand gnc -x proxy:8080 %h %p
+```
+---
+
+
 The Go-netcat is simple implementation of the netcat utility in go that allows to listen and send data over TCP and UDP protocols.
 
 This utility was created for Golang learning purposes and was inspired by https://github.com/dddpaul/go-netcat
@@ -15,13 +25,13 @@ The utility allows to listen UDP\TCP ports and send data to remote ports over TC
 
 The options are as follows:
 
-**-l** 
+**-l**
 	Used to specify that go-nc should listen for an incoming connection rather than initiate a connection to a remote host.
-	
-**-p** __port__ 
+
+**-p** __port__
 	Specifies the source port netcat should use, subject to privilege restrictions and availability.
-	
-**-u** 
+
+**-u**
 	Use UDP instead of the default option of TCP.
 
 ### Examples:
