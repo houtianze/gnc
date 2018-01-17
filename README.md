@@ -1,7 +1,8 @@
-## go-netcat
+## gnc (Go NetCat)
 
 ---
 **Mod**
+
 Add `-x proxy:port` switch to make it suitable for OpenSSH `ProxyCommand` like this:
 ```
 ProxyCommand gnc -x proxy:8080 %h %p
@@ -16,7 +17,7 @@ This utility was created for Golang learning purposes and was inspired by https:
 ### Usage:
 
 ```
-go-nc [-lu] [-p source port ] [-s source ip address ] [hostname ] [port[s]]
+gnc [-lu] [-p source port ] [-s source ip address ] [hostname ] [port[s]]
 ```
 
 ### Description:
@@ -36,18 +37,18 @@ The options are as follows:
 
 ### Examples:
 
-**$ go-netcat hostname 42**
+**$ gnc hostname 42**
 
 Open a TCP connection to port 42 of hostname.
 
-**$ go-netcat -u hostname 53**
+**$ gnc -u hostname 53**
 
 Open a UDP connection to port 53 of hostname.
 
-**$ go-netcat -l 3000**
+**$ gnc -l 3000**
 
 Listen on TCP port 3000, and once there is a connection, send stdin to the remote host, and send data from the remote host to stdout.
 
-**$ go-netcat -u -l 3000**
+**$ gnc -u -l 3000**
 
 Listen on UDP port 3000, and once there is a connection, send stdin to the remote host, and send data from the remote host to stdout.
