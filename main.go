@@ -237,6 +237,8 @@ func main() {
 							break
 						}
 					}
+				} else {
+					log.Fatalln("Error: So far only 'connect' (HTTP) proxy is supported for switch '-X'!")
 				}
 				tcp_con_handle(con)
 			} else {
